@@ -1,0 +1,42 @@
+class Solution {
+    // Method to find the maximum element in the piles
+    public int max(int piles[]) {
+        int ans = Integer.MIN_VALUE;
+        for (int i = 0; i < piles.length; i++) {
+            if (piles[i] > ans) {
+                ans = piles[i];
+            }
+        }
+        return ans;
+    }
+
+    // Method to calculate the total hours needed with a given eating speed
+    public int fun(int piles[], int mid) {
+        int hrs = 0;
+        for (int i = 0; i < piles.length; i++) {
+            // Use integer arithmetic to simulate ceiling effect
+            hrs += (piles[i] + mid - 1) / mid;
+        }
+        return hrs;
+    }
+
+    // Method to find the minimum eating speed
+    public int minEatingSpeed(int[] piles, int h) {
+        int maxElement = max(piles);
+        int minAns = Integer.MAX_VALUE;
+        int low = 1;
+        int high = maxElement;
+        
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int totalhrs = fun(piles, mid);
+            if (totalhrs <= h) {
+                minAns = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return minAns;
+    }
+}
